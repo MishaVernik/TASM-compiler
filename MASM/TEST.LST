@@ -1,0 +1,100 @@
+Microsoft (R) Macro Assembler Version 5.00                  5/13/19 19:09:36
+                                                             Page     1-1
+
+
+				﻿CDATA SEGMENT  
+test.ASM(1): warning A4001: Extra characters on line
+ 0000  07000000			    M1  DD  111b 
+test.ASM(2): error A2086: Data emitted with no segment
+ 0004  000F			    M2  DW  0Fh 
+test.ASM(3): error A2086: Data emitted with no segment
+ 0006  14000000			    M3  DD  20 
+test.ASM(4): error A2086: Data emitted with no segment
+ 000A  43 4F 4D 50 49 4C 45	    SMS DB 'COMPILER 1.0.0' 
+       52 20 31 2E 30 2E 30	
+test.ASM(5): error A2086: Data emitted with no segment
+				CDATA ENDS 
+test.ASM(6): error A2000: Block nesting error
+				 
+				INCAX MACRO 
+				    INC AX 
+				    ENDM 
+				 
+				INCNUM MACRO NUMBER 
+				    INC NUMBER 
+				    ENDM 
+				 
+ 0000				CSEG SEGMENT 
+ 0000				 START: 
+test.ASM(17): error A2062: Missing or unreachable CS
+ 0000  A1 0000 U		    MOV AX, CDATA 
+test.ASM(18): error A2009: Symbol not defined: CDATA
+ 0003  8E D8			    MOV DS, AX 
+				 
+ 0005  B8 0010			    MOV AX, 10h 
+				    BT AX, BX 
+test.ASM(22): error A2105: Expected: instruction or directive
+				     
+ 0008  3F			    AAS 
+ 0009  41			    INC CX 
+ 000A  FF 0D			    DEC WORD PTR [DI] 
+ 000C  23 05			    AND AX, WORD PTR [DI] 
+ 000E  83 09 01			    OR WORD PTR [DI + BX], 0001b 
+ 0011  39 15			    CMP WORD PTR[DI], DX 
+ 0013  7C 00			    JL lblJL	 
+ 0015				lblJL:	  
+test.ASM(31): error A2062: Missing or unreachable CS
+ 0015  8B 00			    MOV AX, [BX][SI] 
+ 0017  2E: 8A 01		    MOV AL, CS:[BX][DI] 
+ 001A  26: 8A 08		    MOV CL, ES:[BX + SI] 
+				    INCAX 
+ 001D  40                    1	    INC AX 
+				    INCNUM M1 
+ 001E  FF 06 0000            1	    INC M1 
+test.ASM(36): warning A4057: Illegal size for operand
+				     
+				 
+ 0022				CSEG ENDS 
+				END 
+
+Microsoft (R) Macro Assembler Version 5.00                  5/13/19 19:09:36
+                                                             Symbols-1
+
+
+Macros:
+
+		N a m e			Lines
+
+INCAX  . . . . . . . . . . . . .  	   1
+INCNUM . . . . . . . . . . . . .  	   1
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CSEG . . . . . . . . . . . . . .  	0022	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+LBLJL  . . . . . . . . . . . . .  	L NEAR	0015	CSEG
+
+M1 . . . . . . . . . . . . . . .  	L DWORD	0000	
+M2 . . . . . . . . . . . . . . .  	L WORD	0004	
+M3 . . . . . . . . . . . . . . .  	L DWORD	0006	
+
+SMS  . . . . . . . . . . . . . .  	L BYTE	000A	
+START  . . . . . . . . . . . . .  	L NEAR	0000	CSEG
+
+@FILENAME  . . . . . . . . . . .  	TEXT  test		
+
+
+     40 Source  Lines
+     42 Total   Lines
+     11 Symbols
+
+  51022 + 465522 Bytes symbol space free
+
+      2 Warning Errors
+      9 Severe  Errors

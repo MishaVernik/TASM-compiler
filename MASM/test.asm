@@ -1,0 +1,40 @@
+﻿0000 CDATA SEGMENT 
+0000    M1  DD  111b
+0004    M2  DW  0Fh
+0006    M3  DD  20
+000A    SMS DB 'COMPILER 1.0.0'
+0018 CDATA ENDS
+
+INCAX MACRO
+    INC AX
+    ENDM
+
+INCNUM MACRO NUMBER
+    INC NUMBER
+    ENDM
+
+0000 CSEG SEGMENT
+0000 START:
+    MOV AX, CDATA
+    MOV DS, AX
+
+    MOV AX, 10h
+    BT AX, BX
+    
+    AAS
+    INC CX
+    DEC WORD PTR [DI]
+    AND AX, WORD PTR [DI]
+    OR WORD PTR [DI + BX], 0001b
+    CMP WORD PTR[DI], DX
+    JL lblJL	
+lblJL:	 
+    MOV AX, [BX][SI]
+    MOV AL, CS:[BX][DI]
+    MOV CL, ES:[BX + SI]
+    INCAX
+    INCNUM M1
+    
+
+CSEG ENDS
+END
